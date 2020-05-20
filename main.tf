@@ -604,6 +604,15 @@ resource "aws_transfer_server" "SftpWithPw-TransferServer" {
   url                    = aws_api_gateway_stage.SftpWithPw-ApiStage.invoke_url
 }
 
+# resource "aws_route53_record" "sftp_cname_entry" {
+#   ttl = 60
+#   zone_id = data.terraform_remote_state.tf_network.outputs.route53_servicezone_id 
+#   name = "sftp.service.${data.terraform_remote_state.tf_shared.outputs.domain_name}"
+#   type = "CNAME"
+#   records = [ aws_transfer_server.sftp.endpoint ]
+# }
+
+
 ###########################################
 #                 OUTPUT                  #
 ###########################################

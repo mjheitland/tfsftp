@@ -78,3 +78,11 @@ aws --region="eu-central-1" transfer test-identity-provider --server-id s-a4709e
 * ls
 * put t2
 * ls
+
+## Troubleshooting
+
+Reasons why it does not work:
+* Configuration in AWS Secrets Manager is wrong: check bucket name, folders, permissions etc.
+* RSA host key differs: delete it from ~/.ssh/known_hosts
+* S3 folder paths do not exist: add some test files to S3 folders
+* VPN might block traffic: turn VPN off and try again

@@ -39,7 +39,8 @@ SFTP_BUCKET="sftp-bucket-${SFTP_AWS_ACCOUNT_NO}"
 aws s3 cp t1 s3://${SFTP_BUCKET}/sftp-user1/
 aws s3 cp t2 s3://${SFTP_BUCKET}/sftp-user2/
 ```
-* Create secrets
+* Create secrets<br>
+(modify secrets/create-secrets.sh: set account id and if not running on Mac, remove '.bak ' argument for sed command)
 ```
 cd secrets
 source secrets/create-secrets.sh

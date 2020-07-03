@@ -27,14 +27,23 @@ When a home directory is set to "Restricted", your users will not be able to acc
 
 ### Preparation
 * Create a public / private key pair with keygen and add the public key to secret/secrets-sftp-user1.json files
-* Set up bucket sftp-bucket (deny public access!) with two subfolders /sftp-user1 (containing file t1) and /sftp-user2 (containing file t2). If the folders are not there, sftp connect would not work!
-You can use the following commands to set it up:
+* Run Terraform to set up resources in AWS:
+```
+terraform init
+terraform apply -auto-approve
+```
+* Set up two subfolders /sftp-user1 (containing file t1) and /sftp-user2 (containing file t2). If the folders are not there, sftp connect would not work!
+```
 SFTP_AWS_ACCOUNT_NO=094033154904
 SFTP_BUCKET="sftp-bucket-${SFTP_AWS_ACCOUNT_NO}"
 aws s3 cp t1 s3://${SFTP_BUCKET}/sftp-user1/
 aws s3 cp t2 s3://${SFTP_BUCKET}/sftp-user2/
-* Create secrets: source secrets/create-secrets.sh
-* You might have to open your vpn if you cannot connect to sftp
+```
+* Create secrets
+```
+cd secrets
+source secrets/create-secrets.sh
+```
 
 ### Test authentication with password
 aws --region="eu-central-1" transfer test-identity-provider --server-id s-a4709e0516384f829 --user-name sftp-user1 --user-password mySecretPassword 

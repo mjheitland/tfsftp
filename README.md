@@ -53,51 +53,57 @@ aws --region="eu-west-1" transfer test-identity-provider --server-id s-5e01aa938
 ```
 
 
-## Test with user1 and his private key - user1 has rw access to <bucket>/sftp-user1 and read access to <bucket>/sftp-user2<br>(replace arn of first command)
+## Test with user1 and his private key - user1 has rw access to <bucket>/sftp-user1 and read access to <bucket>/sftp-user2<br>(replace arn of first command - rm t2 and put t2 should fail as user1 does not have write access to <bucket>/sftp-user2)
 
 ```
+rm t1 t2
 sftp -i ~/.ssh/id_rsa sftp-user1@s-5e01aa938d8a49618.server.transfer.eu-west-1.amazonaws.com
 ls
 cd sftp-user1
-lls
+ls
 get t1
 lls
 rm t1
 ls
 put t1
 ls
-cd sftp-user2
-lls
+cd ../sftp-user2
+ls
 get t2
 lls
 rm t2
 ls
 put t2
 ls
+exit
 ```
 
 
-## Test with user2 and his password - user2 has rw access to <bucket>/sftp-user2 and read access to <bucket>/sftp-user1 <br>(replace arn of first command)
+## Test with user2 and his password - user2 has rw access to <bucket>/sftp-user2 and read access to <bucket>/sftp-user1 <br>(replace arn of first command - rm t1 and put t1 should fail as user2 does not have write access to <bucket>/sftp-user1)
 
 ```
-sftp sftp-user2@s-94c409bbf5d8457a9.server.transfer.eu-west-1.amazonaws.com
+mv ~/.ssh/id_rsa ~/.ssh/id_rsa.prv
+rm t1 t2
+sftp sftp-user2@s-5e01aa938d8a49618.server.transfer.eu-west-1.amazonaws.com
 ls
 cd sftp-user1
-lls
+ls
 get t1
 lls
 rm t1
 ls
 put t1
 ls
-cd sftp-user2
-lls
+cd ../sftp-user2
+ls
 get t2
 lls
 rm t2
 ls
 put t2
 ls
+exit
+mv ~/.ssh/id_rsa.prv ~/.ssh/id_rsa
 ```
 
 

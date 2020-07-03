@@ -3,12 +3,12 @@ SFTP_AWS_ACCOUNT_NO=094033154904
 echo "\$SFTP_AWS_ACCOUNT_NO is $SFTP_AWS_ACCOUNT_NO"
 SFTP_BUCKET="sftp-bucket-${SFTP_AWS_ACCOUNT_NO}"
 echo "\$SFTP_BUCKET is $SFTP_BUCKET"
-sed -i -e "s/\\\$SFTP_BUCKET/$SFTP_BUCKET/g" secrets-resource-based-policy.json
-sed -i -e "s/\\\$SFTP_AWS_ACCOUNT_NO/$SFTP_AWS_ACCOUNT_NO/g" secrets-resource-based-policy.json
-sed -i -e "s/\\\$SFTP_BUCKET/$SFTP_BUCKET/g" secrets-sftp-user1.json
-sed -i -e "s/\\\$SFTP_AWS_ACCOUNT_NO/$SFTP_AWS_ACCOUNT_NO/g" secrets-sftp-user1.json
-sed -i -e "s/\\\$SFTP_BUCKET/$SFTP_BUCKET/g" secrets-sftp-user2.json
-sed -i -e "s/\\\$SFTP_AWS_ACCOUNT_NO/$SFTP_AWS_ACCOUNT_NO/g" secrets-sftp-user2.json
+sed -i .bak -e "s/\\\$SFTP_BUCKET/$SFTP_BUCKET/g" secrets-resource-based-policy.json
+sed -i .bak -e "s/\\\$SFTP_AWS_ACCOUNT_NO/$SFTP_AWS_ACCOUNT_NO/g" secrets-resource-based-policy.json
+sed -i .bak -e "s/\\\$SFTP_BUCKET/$SFTP_BUCKET/g" secrets-sftp-user1.json
+sed -i .bak -e "s/\\\$SFTP_AWS_ACCOUNT_NO/$SFTP_AWS_ACCOUNT_NO/g" secrets-sftp-user1.json
+sed -i .bak -e "s/\\\$SFTP_BUCKET/$SFTP_BUCKET/g" secrets-sftp-user2.json
+sed -i .bak -e "s/\\\$SFTP_AWS_ACCOUNT_NO/$SFTP_AWS_ACCOUNT_NO/g" secrets-sftp-user2.json
 aws secretsmanager create-secret --name /SFTP/sftp-user1 --description 'sftp user1 with rw access for its own folder and ro access for other folders' --secret-string file://secrets-sftp-user1.json
 aws secretsmanager create-secret --name /SFTP/sftp-user2 --description 'sftp user2 with rw access for its own folder and ro access for other folders' --secret-string file://secrets-sftp-user2.json
 

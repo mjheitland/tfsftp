@@ -23,9 +23,9 @@ When a home directory is set to "Restricted", your users will not be able to acc
 
 [Accessing Secrets across accounts](https://aws.amazon.com/blogs/security/how-to-access-secrets-across-aws-accounts-by-attaching-resource-based-policies/)
 
-## Testing
 
-### Preparation
+## Deploy Resources
+
 * Create a public / private key pair with keygen and add the public key to secret/secrets-sftp-user1.json files
 * Run Terraform to set up resources in AWS:
 ```
@@ -45,48 +45,60 @@ cd secrets
 source secrets/create-secrets.sh
 ```
 
-### Test authentication with password
-aws --region="eu-central-1" transfer test-identity-provider --server-id s-a4709e0516384f829 --user-name sftp-user1 --user-password mySecretPassword 
+## Test authentication with password
 
-### Test with user1 and his private key who has rw access to s3:/sftp-user1 and read access to s3://sftp-user2 (replace arn of first command)
-* sftp -i ~/.ssh/id_rsa sftp-user1@s-0158e2bbbc9c436fa.server.transfer.eu-central-1.amazonaws.com
-* ls
-* cd sftp-user1
-* lls
-* get t1
-* lls
-* rm t1
-* ls
-* put t1
-* ls
-* cd sftp-user2
-* lls
-* get t2
-* lls
-* rm t2
-* ls
-* put t2
-* ls
+```
+aws --region="eu-west-1" transfer test-identity-provider --server-id s-a4709e0516384f829 --user-name sftp-user1 --user-password mySecretPassword 
+```
 
-### Test with user2 and his password who has rw access to s3:/sftp-user2 and read access to s3://sftp-user1 (replace arn of first command)
-* sftp sftp-user2@s-94c409bbf5d8457a9.server.transfer.eu-central-1.amazonaws.com
-* ls
-* cd sftp-user1
-* lls
-* get t1
-* lls
-* rm t1
-* ls
-* put t1
-* ls
-* cd sftp-user2
-* lls
-* get t2
-* lls
-* rm t2
-* ls
-* put t2
-* ls
+
+## Test with user1 and his private key - user1 has rw access to <bucket>/sftp-user1 and read access to <bucket>/sftp-user2<br>(replace arn of first command)
+
+```
+sftp -i ~/.ssh/id_rsa sftp-user1@s-0158e2bbbc9c436fa.server.transfer.eu-west-1.amazonaws.com
+ls
+cd sftp-user1
+lls
+get t1
+lls
+rm t1
+ls
+put t1
+ls
+cd sftp-user2
+lls
+get t2
+lls
+rm t2
+ls
+put t2
+ls
+```
+
+
+## Test with user2 and his password - user2 has rw access to <bucket>/sftp-user2 and read access to <bucket>/sftp-user1 <br>(replace arn of first command)
+
+```
+sftp sftp-user2@s-94c409bbf5d8457a9.server.transfer.eu-west-1.amazonaws.com
+ls
+cd sftp-user1
+lls
+get t1
+lls
+rm t1
+ls
+put t1
+ls
+cd sftp-user2
+lls
+get t2
+lls
+rm t2
+ls
+put t2
+ls
+```
+
 
 ## Troubleshooting
 

@@ -43,6 +43,7 @@ aws s3 cp t2 s3://${SFTP_BUCKET}/sftp-user2/
 ```
 cd secrets
 source secrets/create-secrets.sh
+cd ..
 ```
 
 ## Test authentication with password<br>(replace arn of first command)

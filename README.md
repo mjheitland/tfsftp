@@ -45,17 +45,17 @@ cd secrets
 source secrets/create-secrets.sh
 ```
 
-## Test authentication with password
+## Test authentication with password<br>(replace arn of first command)
 
 ```
-aws --region="eu-west-1" transfer test-identity-provider --server-id s-a4709e0516384f829 --user-name sftp-user1 --user-password mySecretPassword 
+aws --region="eu-west-1" transfer test-identity-provider --server-id s-5e01aa938d8a49618 --user-name sftp-user1 --user-password mySecretPassword 
 ```
 
 
 ## Test with user1 and his private key - user1 has rw access to <bucket>/sftp-user1 and read access to <bucket>/sftp-user2<br>(replace arn of first command)
 
 ```
-sftp -i ~/.ssh/id_rsa sftp-user1@s-0158e2bbbc9c436fa.server.transfer.eu-west-1.amazonaws.com
+sftp -i ~/.ssh/id_rsa sftp-user1@s-5e01aa938d8a49618.server.transfer.eu-west-1.amazonaws.com
 ls
 cd sftp-user1
 lls

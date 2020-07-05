@@ -11,6 +11,7 @@ sed -i .bak -e "s/\\\$SFTP_BUCKET/$SFTP_BUCKET/g" secrets-sftp-user2.json
 sed -i .bak -e "s/\\\$SFTP_AWS_ACCOUNT_NO/$SFTP_AWS_ACCOUNT_NO/g" secrets-sftp-user2.json
 aws secretsmanager create-secret --name /SFTP/sftp-user1 --description 'sftp user1 with rw access for its own folder and ro access for other folders' --secret-string file://secrets-sftp-user1.json
 aws secretsmanager create-secret --name /SFTP/sftp-user2 --description 'sftp user2 with rw access for its own folder and ro access for other folders' --secret-string file://secrets-sftp-user2.json
+aws secretsmanager create-secret --name /SFTP/sftp-user3 --description 'sftp user3 with rw access for its own folder' --secret-string file://secrets-sftp-user3.json
 
 # aws secretsmanager get-secret-value --secret-id /SFTP/sftp-user1
 # aws secretsmanager get-secret-value --secret-id /SFTP/sftp-user2

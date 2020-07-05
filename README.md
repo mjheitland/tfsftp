@@ -108,6 +108,29 @@ mv ~/.ssh/id_rsa.prv ~/.ssh/id_rsa
 ```
 
 
+## Test with user3 and his password - user3 has only rw access to <bucket>/sftp-user3<br>
+(replace arn of first command - user3 should not be able to navigate to other folders)
+
+```
+mv ~/.ssh/id_rsa ~/.ssh/id_rsa.prv
+rm t1 t2
+sftp sftp-user3@s-5e01aa938d8a49618.server.transfer.eu-west-1.amazonaws.com
+pwd
+ls
+get t1
+lls
+rm t1
+ls
+put t1
+ls
+cd ..
+pwd
+ls
+exit
+mv ~/.ssh/id_rsa.prv ~/.ssh/id_rsa
+```
+
+
 ## Troubleshooting
 
 Reasons why it does not work:

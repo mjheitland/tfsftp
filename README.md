@@ -38,9 +38,10 @@ SFTP_AWS_ACCOUNT_NO=094033154904
 SFTP_BUCKET="sftp-bucket-${SFTP_AWS_ACCOUNT_NO}"
 aws s3 cp t1 s3://${SFTP_BUCKET}/sftp-user1/
 aws s3 cp t2 s3://${SFTP_BUCKET}/sftp-user2/
+aws s3 cp t3 s3://${SFTP_BUCKET}/sftp-user3/
 ```
 * Create secrets<br>
-(modify secrets/create-secrets.sh: set account id and if not running on Mac, remove '.bak ' argument for sed command)
+(modify secrets/create-secrets.sh: set account id and if not running on Mac, remove "" argument for sed command)
 ```
 cd secrets
 source secrets/create-secrets.sh
@@ -113,15 +114,15 @@ mv ~/.ssh/id_rsa.prv ~/.ssh/id_rsa
 
 ```
 mv ~/.ssh/id_rsa ~/.ssh/id_rsa.prv
-rm t1 t2
+rm t3
 sftp sftp-user3@s-5e01aa938d8a49618.server.transfer.eu-west-1.amazonaws.com
 pwd
 ls
-get t1
+get t3
 lls
-rm t1
+rm t3
 ls
-put t1
+put t3
 ls
 cd ..
 pwd

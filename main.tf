@@ -58,7 +58,7 @@ resource "aws_s3_bucket" "sftp_bucket" {
   # "private": Owner gets FULL_CONTROL. No one else has access rights (default).
   acl = "private"
 
-  # A boolean that indicates all objects (including any locked objects) should be deleted from the bucket 
+  # A boolean that indicates all objects (including any locked objects) should be deleted from the bucket
   # so that the bucket can be destroyed without error. These objects are not recoverable.
   force_destroy = true
 
@@ -88,23 +88,23 @@ resource "aws_s3_bucket" "sftp_bucket" {
 resource "aws_s3_bucket_public_access_block" "sftp_bucket_block_public_access" {
   bucket = aws_s3_bucket.sftp_bucket.id
 
-  # Whether Amazon S3 should block public bucket policies for this bucket. Defaults to false. 
+  # Whether Amazon S3 should block public bucket policies for this bucket. Defaults to false.
   # Enabling this setting does not affect the existing bucket policy. When set to true causes Amazon S3 to:
   # Reject calls to PUT Bucket policy if the specified bucket policy allows public access.
   block_public_acls       = true
 
-  # Whether Amazon S3 should block public bucket policies for this bucket. Defaults to false. 
+  # Whether Amazon S3 should block public bucket policies for this bucket. Defaults to false.
   # Enabling this setting does not affect the existing bucket policy. When set to true causes Amazon S3 to:
   # Reject calls to PUT Bucket policy if the specified bucket policy allows public access.
   block_public_policy     = true
 
-  # Whether Amazon S3 should ignore public ACLs for this bucket. Defaults to false. 
+  # Whether Amazon S3 should ignore public ACLs for this bucket. Defaults to false.
   # Enabling this setting does not affect the persistence of any existing ACLs and doesn't prevent new public ACLs from being set. When set to true causes Amazon S3 to:
   # Ignore public ACLs on this bucket and any objects that it contains.
   ignore_public_acls      = true
 
-  # Whether Amazon S3 should restrict public bucket policies for this bucket. Defaults to false. 
-  # Enabling this setting does not affect the previously stored bucket policy, except that public and cross-account access within the public bucket policy, 
+  # Whether Amazon S3 should restrict public bucket policies for this bucket. Defaults to false.
+  # Enabling this setting does not affect the previously stored bucket policy, except that public and cross-account access within the public bucket policy,
   # including non-public delegation to specific accounts, is blocked. When set to true:
   # Only the bucket owner and AWS Services can access this buckets if it has a public policy.
   restrict_public_buckets = true
@@ -277,7 +277,7 @@ POLICY
             "Resource": "arn:aws:ssm:${var.region}:${data.aws_caller_identity.current.account_id}:parameter${var.sftp_parameter_prefix}*"
         }
     ]
-}    
+}
 POLICY
 */
 }
@@ -350,20 +350,20 @@ resource "aws_iam_role_policy" "SftpWithPw-Transfer-S3FullAccessToSftpBucketPoli
   name    = "SftpWithPw-Transfer-S3FullAccessToSftpBucketPolicy"
   role    = aws_iam_role.SftpWithPw-TransferInvocationRole.id
   policy  = <<POLICY
-{ 
+{
   "Version":"2012-10-17",
-  "Statement":[ 
-    { 
+  "Statement":[
+    {
       "Sid": "TransferS3FullAccessToSftpBucketPolicy",
-      "Action":[ 
+      "Action":[
         "s3:ListBucket",
         "s3:GetBucketLocation"
       ],
       "Effect":"Allow",
       "Resource":"arn:aws:s3:::${local.sftp_bucket}"
     },
-    { 
-      "Action":[ 
+    {
+      "Action":[
         "s3:GetObject",
         "s3:GetObjectVersion",
         "s3:GetObjectAcl",
@@ -459,10 +459,10 @@ resource "aws_api_gateway_model" "SftpWithPw-ApiGetUserConfigResponseModel" {
   "title": "UserConfig",
   "type": "object",
   "properties": {
-    "HomeDirectory": { "type": "string" },
-    "Role":          { "type": "string" },
-    "Policy":        { "type": "string" },
-    "PublicKeys":    { "type": "string", "items": { "type": "string" } }
+    "HomeDirectory": { "type": string },
+    "Role":          { "type": string },
+    "Policy":        { "type": string },
+    "PublicKeys":    { "type": string, "items": { "type": string } }
   }
 }
 EOF
@@ -529,7 +529,7 @@ EOF
 
 resource "aws_api_gateway_integration_response" "SftpWithPw-ApiIntegrationResponse" {
   depends_on = [
-    aws_api_gateway_integration.SftpWithPw-ApiIntegration, 
+    aws_api_gateway_integration.SftpWithPw-ApiIntegration,
     aws_api_gateway_method_response.SftpWithPw-ApiResponseOk
   ]
   rest_api_id = aws_api_gateway_rest_api.SftpWithPw-CustomIdentityProviderApi.id
@@ -606,7 +606,7 @@ resource "aws_transfer_server" "SftpWithPw-TransferServer" {
 
 # resource "aws_route53_record" "sftp_cname_entry" {
 #   ttl = 60
-#   zone_id = data.terraform_remote_state.tf_network.outputs.route53_servicezone_id 
+#   zone_id = data.terraform_remote_state.tf_network.outputs.route53_servicezone_id
 #   name = "sftp.service.${data.terraform_remote_state.tf_shared.outputs.domain_name}"
 #   type = "CNAME"
 #   records = [ aws_transfer_server.sftp.endpoint ]
